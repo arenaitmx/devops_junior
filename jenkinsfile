@@ -19,9 +19,10 @@ pipeline {
 
         steps {
             // get the repo
-            sh 'git clone https://github.com/dev-procedural/apps .'
-            // build repo
-            sh 'cd app1_ci ; mvn clean install -DskipTests'
+  	    sh 'rm -fr *'
+            sh 'git clone http://github.com/dev-procedural/devops_junior'
+            sh 'cd devops_junior/apps/app1'
+	    sh 'mvn clean install -DskipTests'
 
         }
     } // endstage
@@ -30,8 +31,9 @@ pipeline {
     stage("Test") {
       steps {
         // test app1
-        sh 'cd app1_ci ; mvn test'
-        sh 'cd app1_ci ; mvn verify'
+        sh 'cd devops_junior/apps/app1'
+        sh 'mvn test'
+        sh 'mvn verify'
         //sh 'docker run --rm app2 mvn clean verify'
       }
     } // endstage
