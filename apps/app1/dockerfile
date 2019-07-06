@@ -1,0 +1,8 @@
+FROM maven:3-jdk-8-alpine
+
+COPY . /usr/app
+
+WORKDIR /usr/app
+RUN mvn clean install -DskipTests
+
+

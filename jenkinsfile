@@ -1,0 +1,56 @@
+pipeline {
+  agent any
+
+  triggers {
+    pollSCM('* * * * *')
+  }
+
+  options {
+      // timeout(time: 1, unit: 'HOURS')
+      timeout(time: 15, unit: 'MINUTES')
+      buildDiscarder(logRotator(numToKeepStr: '5'))
+
+  }
+
+
+  stages {
+      
+    stage("Build") {
+
+        steps {
+            // get the repo
+            sh 'git clone https://github.com/dev-procedural/apps .'
+            // build repo
+            sh 'cd app1_ci ; mvn clean install -DskipTests'
+
+        }
+    } // endstage
+
+
+    stage("Test") {
+      steps {
+        // test app1
+        sh 'cd app1_ci ; mvn test'
+        sh 'cd app1_ci ; mvn verify'
+        //sh 'docker run --rm app2 mvn clean verify'
+      }
+    } // endstage
+
+
+    stage("Deploy") {
+        steps {
+          dir("$JENKINS_HOME/workspace/$BUILD_TAG"){
+
+            // tagging
+            sh "echo deploy"
+
+          }
+        }
+    } // endstage
+
+
+
+ } // enstages
+} // endpipeline
+
+

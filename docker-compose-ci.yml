@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  jenkins:
+    container_name: jenkins
+    hostname: jenkins
+    image: ddtmx/jenkins
+    entrypoint: ["/sbin/tini" , "--", "/usr/jenkins/init.sh"]
+
+    # create soft link if needed
+    volumes:
+      - "jenkins:/var/jenkins_home"                  # persistent
+      - "/var/run/docker.sock:/var/run/docker.sock"  # docker from jenkins
+      - "/bin/docker:/bin/docker"                    # docker from jenkins
+    ports:
+      - 8880:8080
+      - 50000:50000
+    environment:
+      - JENKINS_UC=https://updates.jenkins.io
+      - JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+      - JENKINS_OPTIONS=--argumentsRealm.passwd.admin=password --argumentsRealm.roles.user=admin --argumentsRealm.roles.admin=admin
+      - JENKINS_SLAVE_AGENT_PORT=50000
+
+    volumes: 
+       - "./services/jenkins:/usr/jenkins"
+
+
