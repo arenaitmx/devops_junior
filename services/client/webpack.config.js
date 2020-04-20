@@ -15,6 +15,18 @@ const entries = [
 
 
 module.exports = {
+  devServer: {
+     allowedHosts: [
+	     '.direct.hive.arena-it.com',
+	     '.hive.arena-it.com',
+	     '.arena-it.com',
+	     'arena-it.com'
+     ],
+     disableHostCheck: true,
+     host: host,
+     port: port,
+     public: host,
+  },
   devtool: 'source-map',
   entry: entries,
   output: {
