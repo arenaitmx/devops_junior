@@ -4,9 +4,9 @@ version: '3.4'
 services:
   back:
     image: app
+    build: ./app
     hostname: back
     container_name: back
-    build: ./
     ports:
       - 8080:8080
     working_dir: /app
@@ -15,6 +15,7 @@ services:
 
   front:
     image: app
+    build: ./app
     hostname: front
     container_name: front
     working_dir: /app
@@ -25,7 +26,6 @@ services:
       cd client
       npm install
       PORT=4444 npm start "
-
 
 networks:
   default:

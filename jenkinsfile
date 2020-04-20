@@ -1,0 +1,54 @@
+pipeline {
+  agent any
+
+  triggers {
+    pollSCM('* * * * *')
+  }
+
+  options {
+      // timeout(time: 1, unit: 'HOURS')
+      timeout(time: 15, unit: 'MINUTES')
+      buildDiscarder(logRotator(numToKeepStr: '5'))
+
+  }
+
+
+  stages {
+
+    stage("Build") {
+
+        steps {
+        // get the repo
+  	    sh 'rm -fr *'
+        sh 'git clone https://github.com/arenaitmx/devops_junior'
+        sh 'echo build here'
+
+        }
+    } // endstage
+
+
+    stage("Test") {
+      steps {
+        // test app1
+        sh 'echo test here'
+      }
+    } // endstage
+
+
+    stage("Deploy") {
+        steps {
+          dir("$JENKINS_HOME/workspace/$BUILD_TAG"){
+
+            // tagging
+            sh 'echo deploy here'
+
+          }
+        }
+    } // endstage
+
+
+
+ } // enstages
+} // endpipeline
+
+
