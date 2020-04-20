@@ -3,29 +3,29 @@ version: '3.4'
 
 services:
   back:
-    image: app
-    build: ./app
+    image: back
+    build: ./app/back
     hostname: back
     container_name: back
     ports:
       - 8080:8080
     working_dir: /app
     command: |
-      ./mvnw spring-boot:run 
+      mvn spring-boot:run 
 
   front:
-    image: app
-    build: ./app
+    image: front
+    build: ./app/client
     hostname: front
     container_name: front
-    working_dir: /app
+    working_dir: /app/client
     ports:
       - 4444:4444
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4444
     command: |
-      sh -c "
-      cd client
-      npm install
-      PORT=4444 npm start "
+      npm start
 
 networks:
   default:

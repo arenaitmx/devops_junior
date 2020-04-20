@@ -2,9 +2,12 @@ const path = require('path');
 const webpack = require('webpack');
 
 const port = process.env.PORT || 3000;
+const back_port = process.env.PORT || 8080;
+const host = process.env.HOST || 'localhost';
+const back = process.env.BACK || 'localhost';
 
 const entries = [
-  'webpack-dev-server/client?http://localhost:' + port,
+  'webpack-dev-server/client?http://' + host + ':' + port,
   'webpack/hot/only-dev-server',
   'react-hot-loader/patch',
   './src/main.tsx'
@@ -24,7 +27,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-      __API_SERVER_URL__: JSON.stringify('http://localhost:8080')
+      __API_SERVER_URL__: JSON.stringify('http://' + back + ':' + back_port)
     })
   ],
   resolve: {

@@ -5,7 +5,6 @@ COPY . /app
 WORKDIR /app
 
 RUN apt update && apt install npm -y \
-        && mvn package \
-        && cd client && npm install
+        && mvn package -DskipTests \
 
 
