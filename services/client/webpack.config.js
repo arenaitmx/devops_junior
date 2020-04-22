@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 const port = process.env.PORT || 3000;
-const back_port = process.env.PORT || 8080;
+const back_port = process.env.BACK_PORT || 80;
 const host = process.env.HOST || 'localhost';
 const back = process.env.BACK || 'localhost';
 
