@@ -15,18 +15,24 @@ services:
 
   front:
     image: front
-    build: ./services/client
     hostname: front
     container_name: front
     working_dir: /app
+    build: 
+      context: ./services/client
+      args:
+        PORT: 4444
+        IP: $IP
+        SESSION: $SESSION
+        BACK_PORT: 80   # 8080 local testing
+        BACK_PWD: 8080
     ports:
       - 4444:4444
-      - 4441:4441
     environment:
       HOST: 0.0.0.0
       PORT: 4444
-    command: |
-      npm start
+      IP: $IP
+
 
 networks:
   default:

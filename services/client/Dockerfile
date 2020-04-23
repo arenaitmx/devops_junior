@@ -1,10 +1,17 @@
+ARG PORT
+
 FROM node:13.12.0-alpine as BUILD
 
-ENV SESSION
-ENV PORT
-ENV BACK_PORT
-ENV BACK_IP
-ENV BACK=ip${BACK_IP}${SESSION}-${BACK_PORT}.direct.arena-it.com
+ARG SESSION
+ARG BACK_PORT
+ARG BACK_PWD
+ARG IP
+
+ENV BACK_PORT $BACK_PORT
+
+RUN env
+ENV BACK=ip${IP}-${SESSION}-${BACK_PWD}.direct.arena-it.com
+RUN echo $BACK
 
 COPY . /app
 
@@ -16,15 +23,10 @@ RUN npm install \
 
 FROM nginx:alpine
 
-ENV SESSION
-ENV PORT
-ENV BACK
-ENV BACK_PORT
-
+ARG PORT
+RUN env
 COPY --from=BUILD /app/public /var/www/public
-
 COPY default.conf /etc/nginx/conf.d/default.conf
+RUN sed -i s/PORT/$PORT/g /etc/nginx/conf.d/default.conf 
 
-RUN sed -i "s|PORT|$PORT|g" /etc/nginx/conf.d/default.conf
-
-CMD nginx -g 'daemon off'
+CMD nginx -g 'daemon off;'
