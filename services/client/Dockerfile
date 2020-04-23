@@ -10,7 +10,7 @@ ARG IP
 ENV BACK_PORT $BACK_PORT
 
 RUN env
-ENV BACK=ip${IP}-${SESSION}-${BACK_PWD}.direct.arena-it.com
+ENV BACK=ip${IP}-${SESSION}-${BACK_PWD}.direct.pwd.arena-it.com
 RUN echo $BACK
 
 COPY . /app
