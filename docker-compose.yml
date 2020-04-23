@@ -28,10 +28,14 @@ services:
         BACK_PWD: 8080
     ports:
       - 4444:4444
+    env_file: 
+      - .env
     environment:
       HOST: 0.0.0.0
       PORT: 4444
       IP: $IP
+    command: |
+      sh -c 'echo IP=$(echo $(hostname -i) |sed "s|\.|-|g" ) > .env'
 
 
 networks:
