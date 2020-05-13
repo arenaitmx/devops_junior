@@ -16,7 +16,7 @@ services:
       - JENKINS_OPTIONS=--argumentsRealm.passwd.admin=password --argumentsRealm.roles.user=admin --argumentsRealm.roles.admin=admin
       - JENKINS_SLAVE_AGENT_PORT=50000
       - SESSION=$SESSION_ID
-      - $IP=$IP
+      - IP=$IP
     # create soft link if needed
     volumes:
       - "jenkins:/var/jenkins_home"                  # persistent

@@ -25,7 +25,7 @@ services:
         IP: $IP
         SESSION: TEST_ID
         # SESSION: $SESSION_ID
-        BACK_PORT: 8080   # 8080 local testing
+        BACK_PORT: 8080   # 8080 local testing | 80 pwd
         BACK_PWD: 8080
     ports:
       - 4444:4444

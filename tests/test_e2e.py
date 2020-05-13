@@ -10,54 +10,102 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-driver = webdriver.Chrome("/tmp/chromedriver")
-driver.get("http://localhost:4444/")
-driver.set_window_size(1475, 1053)
+from selenium.webdriver.chrome.options import Options
 
-# TEST 1
-driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
-driver.find_element(By.LINK_TEXT, "Add Owner").click()
-driver.find_element(By.NAME, "firstName").click()
-driver.find_element(By.NAME, "firstName").send_keys("TESTUSER")
-driver.find_element(By.NAME, "lastName").send_keys("TESTUSER")
-driver.find_element(By.NAME, "address").send_keys("TEST_ADDR")
-driver.find_element(By.NAME, "city").send_keys("TEST_CITY")
-driver.find_element(By.NAME, "telephone").send_keys("123123123")
-driver.find_element(By.CSS_SELECTOR, ".btn").click()
+class Test():
+  def setup_method(self, method):
+      #self.options = Options()
+      #self.options.add_argument("--headless")
+      #self.options.headless = True
+      self.driver = webdriver.Chrome()             #driver must be in PATH
+      self.vars = {}
 
-driver.implicitly_wait(3)
-# TEST 2
-driver.find_element(By.CSS_SELECTOR, "a[href*=new]").click()
-driver.execute_script("window.scrollTo(0,0)")
-driver.find_element(By.NAME, "name").click()
-driver.find_element(By.NAME, "name").send_keys("PETTEST")
+  def teardown_method(self, method):
+      self.driver.quit()
 
-driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
-driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
-driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
+  def test1(self):
+      # TEST 1
+      self.driver.get("http://localhost:4444/")
+      self.driver.set_window_size(1657, 933)
+      self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
+      self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
+      self.driver.find_element(By.NAME, "firstName").click()
+      self.driver.find_element(By.NAME, "firstName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "lastName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "address").send_keys("TEST_ADDR")
+      self.driver.find_element(By.NAME, "city").send_keys("TEST_CITY")
+      self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+      self.driver.implicitly_wait(3)
 
-dropdown = driver.find_element(By.NAME, "typeId")
-dropdown.find_element(By.XPATH, "//option[. = 'cat']").click()
-driver.find_element(By.CSS_SELECTOR, "option:nth-child(2)").click()
-driver.find_element(By.CSS_SELECTOR, ".btn").click()
+  def test2(self):
+      # TEST 2
+      # TEST 1
+      self.driver.get("http://localhost:4444/")
+      self.driver.set_window_size(1657, 933)
+      self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
+      self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
+      self.driver.find_element(By.NAME, "firstName").click()
+      self.driver.find_element(By.NAME, "firstName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "lastName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "address").send_keys("TEST_ADDR")
+      self.driver.find_element(By.NAME, "city").send_keys("TEST_CITY")
+      self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+      self.driver.implicitly_wait(3)
+      print("test")
+      self.driver.find_element(By.CSS_SELECTOR, "a[href*=new]").click()
+      self.driver.execute_script("window.scrollTo(0,0)")
+      self.driver.find_element(By.NAME, "name").click()
+      self.driver.find_element(By.NAME, "name").send_keys("PETTEST")
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
+      self.dropdown = self.driver.find_element(By.NAME, "typeId")
+      self.dropdown.find_element(By.XPATH, "//option[. = 'cat']").click()
+      self.driver.find_element(By.CSS_SELECTOR, "option:nth-child(2)").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
+  def test3(self):
+      # TEST 3
+      # TEST 2
+      # TEST 1
+      self.driver.get("http://localhost:4444/")
+      self.driver.set_window_size(1657, 933)
+      self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
+      self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
+      self.driver.find_element(By.NAME, "firstName").click()
+      self.driver.find_element(By.NAME, "firstName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "lastName").send_keys("TESTUSER")
+      self.driver.find_element(By.NAME, "address").send_keys("TEST_ADDR")
+      self.driver.find_element(By.NAME, "city").send_keys("TEST_CITY")
+      self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+      self.driver.implicitly_wait(3)
 
-# TEST 3
-driver.find_element(By.LINK_TEXT, "Add Visit").click()
-driver.execute_script("window.scrollTo(0,0)")
+      self.driver.find_element(By.CSS_SELECTOR, "a[href*=new]").click()
+      self.driver.execute_script("window.scrollTo(0,0)")
+      self.driver.find_element(By.NAME, "name").click()
+      self.driver.find_element(By.NAME, "name").send_keys("PETTEST")
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
+      self.dropdown = self.driver.find_element(By.NAME, "typeId")
+      self.dropdown.find_element(By.XPATH, "//option[. = 'cat']").click()
+      self.driver.find_element(By.CSS_SELECTOR, "option:nth-child(2)").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
-driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
-driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
-driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
-
-driver.find_element(By.NAME, "description").click()
-driver.find_element(By.NAME, "description").send_keys("qweqwe")
-driver.find_element(By.CSS_SELECTOR, ".btn").click()
-
+      self.driver.find_element(By.LINK_TEXT, "Add Visit").click()
+      self.driver.execute_script("window.scrollTo(0,0)")
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
+      self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
+      self.driver.find_element(By.NAME, "description").click()
+      self.driver.find_element(By.NAME, "description").send_keys("qweqwe")
+      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
 #element = driver.find_element(By.CSS_SELECTOR, ".btn")
 #actions = ActionChains(driver)
 #actions.move_to_element(element).perform()
 #driver.find_element(By.CSS_SELECTOR, "li:nth-child(3) span:nth-child(2)").click()
 
-driver.quit()
