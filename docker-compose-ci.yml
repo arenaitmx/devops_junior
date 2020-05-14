@@ -24,6 +24,20 @@ services:
       - "/bin/docker:/bin/docker"                    # docker from jenkins
       - "./services/jenkins:/usr/jenkins"
 
+  selenium:
+    container_name: selenium
+    hostname: selenium
+    image: selenium/standalone-chrome
+    build: ./tests
+    ports:
+      - 4441:4444
+    #command: pytest --html=report.html --self-contained-html
+    #command: bash
+    tty: true
+    volumes:
+      - "$PWD/tests:/app"
+
+
 volumes:
   jenkins: 
 

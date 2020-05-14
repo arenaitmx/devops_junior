@@ -23,9 +23,9 @@ services:
       args:
         PORT: 4444
         IP: $IP
-        SESSION: TEST_ID
-        # SESSION: $SESSION_ID
-        BACK_PORT: 8080   # 8080 local testing | 80 pwd
+        SESSION: TEST_ID       # local conf 
+        # SESSION: $SESSION_ID # prod  conf
+        BACK_PORT: 8080        # 8080 local testing | 80 pwd
         BACK_PWD: 8080
     ports:
       - 4444:4444

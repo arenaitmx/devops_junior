@@ -14,10 +14,12 @@ from selenium.webdriver.chrome.options import Options
 
 class Test():
   def setup_method(self, method):
-      #self.options = Options()
-      #self.options.add_argument("--headless")
-      #self.options.headless = True
-      self.driver = webdriver.Chrome()             #driver must be in PATH
+      self.options = Options()
+      self.options.add_argument("--headless")
+      self.options.headless = True
+      #self.driver = webdriver.Chrome()             #driver must be in PATH
+      self.driver = webdriver.Remote("http://selenium:4444/wd/hub", DesiredCapabilities.CHROME)             #driver must be in PATH
+
       self.vars = {}
 
   def teardown_method(self, method):
@@ -25,7 +27,8 @@ class Test():
 
   def test1(self):
       # TEST 1
-      self.driver.get("http://localhost:4444/")
+      self.driver.get("http://front:4444/")
+      print(self.driver.current_url)
       self.driver.set_window_size(1657, 933)
       self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
       self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
@@ -37,11 +40,13 @@ class Test():
       self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
       self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
       self.driver.implicitly_wait(3)
+      print(self.driver.current_url)
 
   def test2(self):
       # TEST 2
       # TEST 1
-      self.driver.get("http://localhost:4444/")
+      self.driver.get("http://front:4444/")
+      print(self.driver.current_url)
       self.driver.set_window_size(1657, 933)
       self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
       self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
@@ -51,13 +56,24 @@ class Test():
       self.driver.find_element(By.NAME, "address").send_keys("TEST_ADDR")
       self.driver.find_element(By.NAME, "city").send_keys("TEST_CITY")
       self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
-      self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
+
+      btn = self.driver.find_element(By.XPATH, "//button[contains(., 'Add Owner')]")
+      self.driver.execute_script("arguments[0].click();", btn)
+      #self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+      #print(self.driver.find_element(By.CSS_SELECTOR, "button[type='submit']").text)
+
+      print("Waiting for click")
+      print(self.driver.current_url)
       self.driver.implicitly_wait(3)
-      print("test")
-      self.driver.find_element(By.CSS_SELECTOR, "a[href*=new]").click()
+
+      self.driver.save_screenshot('screenie.png')
+      print(self.driver.current_url)
+      #print(self.driver.page_source)
+      self.driver.find_element(By.XPATH, "//a[contains(., 'Add New Pet')]").click()
       self.driver.execute_script("window.scrollTo(0,0)")
       self.driver.find_element(By.NAME, "name").click()
       self.driver.find_element(By.NAME, "name").send_keys("PETTEST")
+
       self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
       self.driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
       self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
@@ -66,11 +82,12 @@ class Test():
       self.driver.find_element(By.CSS_SELECTOR, "option:nth-child(2)").click()
       self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
 
+
   def test3(self):
       # TEST 3
       # TEST 2
       # TEST 1
-      self.driver.get("http://localhost:4444/")
+      self.driver.get("http://front:4444/")
       self.driver.set_window_size(1657, 933)
       self.driver.find_element(By.CSS_SELECTOR, "li:nth-child(2) > a").click()
       self.driver.find_element(By.LINK_TEXT, "Add Owner").click()
@@ -82,11 +99,11 @@ class Test():
       self.driver.find_element(By.NAME, "telephone").send_keys("123123123")
       self.driver.find_element(By.CSS_SELECTOR, ".btn").click()
       self.driver.implicitly_wait(3)
-
-      self.driver.find_element(By.CSS_SELECTOR, "a[href*=new]").click()
+      self.driver.find_element(By.XPATH, "//a[contains(., 'Add New Pet')]").click()
       self.driver.execute_script("window.scrollTo(0,0)")
       self.driver.find_element(By.NAME, "name").click()
       self.driver.find_element(By.NAME, "name").send_keys("PETTEST")
+
       self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__input-container").click()
       self.driver.find_element(By.CSS_SELECTOR, ".form-control.react-datepicker-ignore-onclickoutside").click()
       self.driver.find_element(By.CSS_SELECTOR, ".react-datepicker__week:nth-child(2) > .react-datepicker__day:nth-child(4)").click()
