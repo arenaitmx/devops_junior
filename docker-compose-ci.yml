@@ -32,7 +32,7 @@ services:
     build: ./tests
     ports:
       - 4441:4444
-    #command: pytest --html=report.html --self-contained-html
+    command: pytest --html=report.html --self-contained-html
     #command: bash
     tty: true
     volumes:

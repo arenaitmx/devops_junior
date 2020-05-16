@@ -24,7 +24,7 @@ pipeline {
         steps {
             dir("$JENKINS_HOME/workspace/$BUILD_TAG"){
                 sh "git clone -b $BRANCH $REPO"
-                sh "cd devops_junior && make"
+                sh "cd devops_junior && make || true"
             }
         }
     }
@@ -65,10 +65,10 @@ pipeline {
 
     stage("Test") {
       steps {
-        dir("$JENKINS_HOME/workspace/$BUILD_TAG/$DIR_TEST"){
+        dir("$JENKINS_HOME/workspace/$BUILD_TAG/devops_junior"){
             // tests
             echo 'running tests'
-            sh 'ls -l'
+            sh 'docker-compose -f docker-compose-ci.yml up -d selenium'
         }
       }
     } // endstage
