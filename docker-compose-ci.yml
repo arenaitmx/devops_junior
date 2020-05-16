@@ -21,7 +21,8 @@ services:
     volumes:
       - "jenkins:/var/jenkins_home"                  # persistent
       - "/var/run/docker.sock:/var/run/docker.sock"  # docker from jenkins
-      - "/bin/docker:/bin/docker"                    # docker from jenkins
+      # - "/bin/docker:/bin/docker"                    # docker from jenkins
+      - "/usr/bin/docker:/bin/docker"                    # docker from jenkins
       - "./services/jenkins:/usr/jenkins"
 
   selenium:

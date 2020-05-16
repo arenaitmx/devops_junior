@@ -10,37 +10,74 @@ pipeline {
       timeout(time: 15, unit: 'MINUTES')
       buildDiscarder(logRotator(numToKeepStr: '5'))
   }
- 
+
+  environment {
+    REPO = "https://github.com/arenaitmx/devops_junior" // this must be created in the webui
+    DIR_FRONT = "devops_junior/services/client"
+    DIR_BACK  = "devops_junior/services/back"
+    DIR_TEST  = "devops_junior/tests"
+    BRANCH    = "dev"
+  }
 
   stages {
-
-    stage("Build") {
-
+    stage("Checkout"){
         steps {
-        // get the repo
-  	    sh 'rm -fr *'
-        sh 'git clone https://github.com/arenaitmx/devops_junior'
-        sh 'echo build here'
-
+            dir("$JENKINS_HOME/workspace/$BUILD_TAG"){
+                sh "git clone -b $BRANCH $REPO"
+            }
         }
-    } // endstage
+    }
 
+    stage("Build"){
+        parallel {
+            stage("Build Front") {
+              steps {
+                dir("$JENKINS_HOME/workspace/$BUILD_TAG/devops_junior"){
+                    sh 'ls -l'
+                    sh 'docker-compose build front'
+                    echo "unit test"
+                }
+              }
+              post {
+                 success {
+                    //sh 'docker-compose build front'
+                    sh 'ls -l '
+                    echo 'successful'
+                 }
+                 failure {
+                    sh 'ls -l'
+                    echo 'failed'
+                }
+              }
+            } // endstage
+
+            stage("Build Back") {
+              steps {
+                dir("$JENKINS_HOME/workspace/$BUILD_TAG/devops_junior"){
+                    sh 'ls -l '
+                    sh 'docker-compose build back'
+                }
+              }
+            } // endstage
+        }
+    }
 
     stage("Test") {
       steps {
-        // test app1
-        sh 'echo test here'
+        dir("$JENKINS_HOME/workspace/$BUILD_TAG/$DIR_TEST"){
+            // tests
+            echo 'running tests'
+            sh 'ls -l'
+        }
       }
     } // endstage
 
 
     stage("Deploy") {
         steps {
-          dir("$JENKINS_HOME/workspace/$BUILD_TAG"){
-
+          dir("$JENKINS_HOME/workspace/$BUILD_TAG/devops_junior"){
             // tagging
-            sh 'echo deploy here'
-
+            sh 'ls -l ' // local/pwd
           }
         }
     } // endstage
@@ -49,5 +86,4 @@ pipeline {
 
  } // enstages
 } // endpipeline
-
 
