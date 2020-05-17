@@ -68,7 +68,7 @@ pipeline {
         dir("$JENKINS_HOME/workspace/$BUILD_TAG/devops_junior"){
             // tests
             echo 'running tests'
-            sh 'docker-compose -f docker-compose-ci.yml up selenium'
+            sh 'docker-compose -f docker-compose-ci.yml up tests'
         }
       }
     } // endstage
