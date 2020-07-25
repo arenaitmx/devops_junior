@@ -24,6 +24,7 @@ services:
       # - "/bin/docker:/bin/docker"                    # docker from jenkins
       - "/usr/bin/docker:/bin/docker"                    # docker from jenkins
       - "./services/jenkins:/usr/jenkins"
+      - "/usr/app/:/app/repo"
     tty: true 
 
   selenium:
